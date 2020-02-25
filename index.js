@@ -5,7 +5,7 @@ let path = require('path');
 
 app.use(express.static(path.join(__dirname,'/')))
 
-app.get('/', (req, res) => {
+app.get('/all', (req, res) => {
    //res.send("Hello")
    res.sendFile(path.join(__dirname+'/index.html'))
 });
