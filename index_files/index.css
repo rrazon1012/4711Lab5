@@ -1,0 +1,118 @@
+@font-face{
+   font-family: 'jedi';
+    src: url('starjedi-webfont.woff2') format('woff2'),
+         url('starjedi-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+#search-button{
+   display: flex;
+   flex-direction:row;
+}
+.searchbar {
+   width: 40%;
+   display: block;
+   margin-top: 50px;
+   margin: 0 auto;
+   border-style: solid;
+   border-color: gainsboro;
+   padding-bottom: 10px;
+}
+
+#search{
+   background-color: gainsboro;
+   color: dimgrey;
+}
+
+#title{
+   margin-left: 25px;
+   font-family: 'jedi';
+}
+#bar{
+   display: block;
+   margin-left: 30px;
+   width: 70%;
+   height: 30px;
+   border-radius: 5px;
+   border-color: gainsboro;
+}
+
+#Add-Artist{
+   padding: 7px;
+   background-color: gainsboro;
+   color: dimgrey;
+   border-color: gainsboro;
+   margin-left: 5px;
+}
+
+#addform{
+   display: flex;
+   flex-direction:column;
+   width: 50%;
+   margin: 0 auto;
+   display: none;
+}
+.input-text{
+   border-color: gainsboro;
+   border-radius: 5px;
+   width: 60%;
+   margin: 0 auto;
+   padding: 5px;
+   text-align: center;
+}
+#input-button{
+   padding: 10px;
+   background-color: gainsboro;
+   color: dimgray;
+   width: 25%;
+   margin: 0 auto;
+}
+
+.container{
+   align-content: center;
+   margin: 0 auto;
+   width: 30%;
+}
+
+.artist:hover{
+   background-color: lightgray;
+}
+.artist{
+   font-family: 'jedi';
+   display: flex;
+   flex-flow: row;
+   border-style: solid;
+   border-top-style: hidden;
+   border-color: gainsboro;
+}
+
+.picture{
+   width: 25%;
+   margin: 10px 10px;
+}
+.information{
+   width: 35%;
+   margin-right: 20px;
+}
+.name{
+   font-family: sans-serif;
+   font-weight: bold;
+   margin-bottom: 0px;
+}
+.spec{
+   font-family: sans-serif;
+   font-size: 13px; 
+   margin-top: 0;
+}
+
+.delete{
+   display: inline;
+   align-self: flex-end;
+   margin: auto;
+   border-radius: 5px;
+   width: 70px;
+   height:30px;
+   background-color: red;
+   color:white;
+}
+

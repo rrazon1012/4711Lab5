@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <title>Artist Directory</title>
+   <link rel="stylesheet" href="index_files/index.css">
+   <script src="index_files/index.js" defer></script> 
+</head>
+   
+<body onload="load()">
+   <div class="searchbar">
+      <form>
+         <h1 id="title">Artist Directory</h1>
+         <div id="search-button">
+            <input type="search" id="bar">
+            <input type="button" id="Add-Artist" value="Add Artist" >
+            <input type="button" id="search" value="Search">
+         </div> 
+      </form>
+   </div>
+   
+   <div class="form">
+      <form id="addform">
+         <input type="text" id="input-name"class="input-text" maxlength="40" placeholder="Artist Name">
+         <input type="text" id="input-info" class="input-text" maxlength="40" placeholder="About artist">
+         <input type="text" id="input-picture" class="input-text" placeholder="Image Url">
+         <input type="button" value="Add" id="input-button">
+      </form>
+   </div>
+   
+   <div class="container" id="input-destination">
+      
+   
+   </div>
+</body>
+</html>
