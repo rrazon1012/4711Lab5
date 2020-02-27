@@ -1,3 +1,4 @@
+
 let x = document.getElementById("Add-Artist");
 x.addEventListener('click',addArtist,false);
 
@@ -9,10 +10,14 @@ z.addEventListener('click',search,false);
 
 function addArtist(){
    var b = document.getElementById("addform");
+   if(b.style.display != "flex"){
    document.getElementById("input-name").value = "";
    document.getElementById("input-info").value = "";
    document.getElementById("input-picture").value = "";
    b.style.display = "flex";
+   } else if(b.style.display == "flex"){
+      b.style.display = "none";
+   }
 }
 
 function add(){
@@ -32,7 +37,6 @@ function add(){
    information.className = "information";
    //var deldiv = document.createElement("DIV");
 
-   
    var artistname = document.createElement("P")
    console.log(name.value);
    artistname.className = "name";
@@ -45,8 +49,7 @@ function add(){
    //about.value = "";
    
    var artistpicture = document.createElement("IMG")
-   artistpicture.src = image.value;
-   
+   artistpicture.src = image.value;  
    
    var tempname = name.value;
    var tempabout = about.value;
@@ -57,11 +60,9 @@ function add(){
    del.textContent = "Delete"
    del.onclick = function(){
       this.parentNode.remove();
-      localStorage.removeItem(tempname);
    }
    //deldiv.appendChild(del);
-   
-   
+    
    artist.appendChild(pic);
    artist.appendChild(information);
    artist.appendChild(del);
@@ -70,14 +71,11 @@ function add(){
    information.appendChild(artistname);
    information.appendChild(artistinfo);
    
-
-   
    var information = {
       "about":tempabout,
       "image":tempimage
    };
-   
-   localStorage.setItem(name.value,JSON.stringify(information));
+   //localStorage.setItem(name.value,JSON.stringify(information));
    container.appendChild(artist);
 }
 
@@ -88,93 +86,117 @@ function search(){
    var container = document.getElementById("input-destination");
    container.innerHTML = "";
    
-   for(var i = 0; i < localStorage.length;i++)
-   {
+   
       var patt = new RegExp(input.toLowerCase());
-      console.log(input);
-      console.log(localStorage.key(i));
-      console.log(patt.test(localStorage.key(i).toLowerCase()));
-      if(patt.test(localStorage.key(i).toLowerCase()))
-      {   
-         var array = JSON.parse(localStorage.getItem(localStorage.key(i)));
-         var artist = document.createElement("DIV");
-         artist.className = "artist";
-         var pic = document.createElement("DIV")
-         pic.className = "picture"
-         var information = document.createElement("DIV");
-         information.className = "information";
-         
-         var artistname = document.createElement("P")
-         artistname.className = "name";
-         artistname.textContent = localStorage.key(i);
-   
-         var artistinfo = document.createElement("P")
-         artistinfo.className = "spec"
-         artistinfo.textContent = array.about;
+      fetch('database.json')  //defaults to GET request 
+         .then(function(response) {
+         return response.json(); 
+      }) 
+         .then(function(data) {// we have the data in json or text 
 
-         var artistpicture = document.createElement("IMG")
-         artistpicture.src = array.image;
-         
-         var del = document.createElement("BUTTON")
-         del.className = "delete";
-         del.textContent = "Delete"
-         del.onclick = function(){
-            this.parentNode.remove();
-            localStorage.removeItem(artistname.textContent);
-            
-         }
-         
-         artist.appendChild(pic);
-         artist.appendChild(information);
-         artist.appendChild(del);
-   
-         pic.appendChild(artistpicture);
-         information.appendChild(artistname);
-         information.appendChild(artistinfo);  
-         container.appendChild(artist);
+            for(var x in data.Artists){     
+               console.log(patt.test(data.Artists[x].name.toLowerCase()))
+               if(patt.test(data.Artists[x].name.toLowerCase())){
+   //            console.log("Item",data.Artists);
+               console.log(data.Artists[x]);
+               var artist = document.createElement("DIV");
+               artist.className = "artist";
+
+               var pic = document.createElement("DIV")
+               pic.className = "picture"
+
+               var information = document.createElement("DIV");
+               information.className = "information";
+
+               var artistname = document.createElement("P")
+               artistname.className = "name";
+               artistname.textContent = data.Artists[x].name;
+
+               var artistinfo = document.createElement("P")
+               artistinfo.className = "spec"
+               artistinfo.textContent = data.Artists[x].info;
+
+               var artistpicture = document.createElement("IMG")
+               artistpicture.className = "image";
+               artistpicture.src = data.Artists[x].pic;
+
+
+               var del = document.createElement("BUTTON")
+               artist.appendChild(pic);
+               artist.appendChild(information);
+               artist.appendChild(del);
+
+               pic.appendChild(artistpicture);
+               information.appendChild(artistname);
+               information.appendChild(artistinfo);  
+
+               del.className = "delete";
+               del.textContent = "Delete"
+               del.onclick = function(){
+                  this.parentNode.remove();
+                  data.Artists.filter((user) =>{return artist.name == data.Artists.name})
+               }
+               container.appendChild(artist);
+            }
       }
-   }
+      }) 
+         .catch(function(error) { console.log('Request failed', error) });
+
 }
 
 function load(){
    var searchbar = document.getElementById("bar");
    var input = searchbar.value;
    var container = document.getElementById("input-destination");
-   for(var i = 0; i < localStorage.length;i++){
-         var array = JSON.parse(localStorage.getItem(localStorage.key(i)));
-         var artist = document.createElement("DIV");
-         artist.className = "artist";
-         var pic = document.createElement("DIV")
-         pic.className = "picture"
-         var information = document.createElement("DIV");
-         information.className = "information";
-         
-         var artistname = document.createElement("P")
-         artistname.className = "name";
-         artistname.textContent = localStorage.key(i);
    
-         var artistinfo = document.createElement("P")
-         artistinfo.className = "spec"
-         artistinfo.textContent = array.about;
-   
-         var artistpicture = document.createElement("IMG")
-         artistpicture.src = array.image;
+   fetch('database.json')  //defaults to GET request 
+      .then(function(response) {
+      return response.json(); 
+   }) 
+      .then(function(data) {// we have the data in json or text 
       
-         container.appendChild(artist);
-         var del = document.createElement("BUTTON")
-         artist.appendChild(pic);
-         artist.appendChild(information);
-         artist.appendChild(del);
-   
-         pic.appendChild(artistpicture);
-         information.appendChild(artistname);
-         information.appendChild(artistinfo);  
-         
-         del.className = "delete";
-         del.textContent = "Delete"
-         del.onclick = function(){
-            this.parentNode.remove();
-            localStorage.removeItem(artistname.textContent);
+         for(var x in data.Artists){      
+//            console.log("Item",data.Artists);
+            console.log(data.Artists[x]);
+            var artist = document.createElement("DIV");
+            artist.className = "artist";
+            
+            var pic = document.createElement("DIV")
+            pic.className = "picture"
+            
+            var information = document.createElement("DIV");
+            information.className = "information";
+
+            var artistname = document.createElement("P")
+            artistname.className = "name";
+            artistname.textContent = data.Artists[x].name;
+
+            var artistinfo = document.createElement("P")
+            artistinfo.className = "spec"
+            artistinfo.textContent = data.Artists[x].info;
+
+            var artistpicture = document.createElement("IMG")
+            artistpicture.className = "image";
+            artistpicture.src = data.Artists[x].pic;
+
+            
+            var del = document.createElement("BUTTON")
+            artist.appendChild(pic);
+            artist.appendChild(information);
+            artist.appendChild(del);
+
+            pic.appendChild(artistpicture);
+            information.appendChild(artistname);
+            information.appendChild(artistinfo);  
+
+            del.className = "delete";
+            del.textContent = "Delete"
+            del.onclick = function(){
+               this.parentNode.remove();
+               data.Artists.filter((user) =>{return artist.name == data.Artists.name})
+            }
+            container.appendChild(artist);
          }
-      }
+   }) 
+      .catch(function(error) { console.log('Request failed', error) });
 }

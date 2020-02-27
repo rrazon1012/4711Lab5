@@ -3,7 +3,7 @@
 <head>
    <meta charset="utf-8">
    <title>Artist Directory</title>
-   <link rel="stylesheet" href="index_files/index.css">
+   <link rel="stylesheet" href="/index_files/index.css">
    <script src="index_files/index.js" defer></script> 
 </head>
    
@@ -20,11 +20,11 @@
    </div>
    
    <div class="form">
-      <form id="addform">
-         <input type="text" id="input-name"class="input-text" maxlength="40" placeholder="Artist Name">
-         <input type="text" id="input-info" class="input-text" maxlength="40" placeholder="About artist">
-         <input type="text" id="input-picture" class="input-text" placeholder="Image Url">
-         <input type="button" value="Add" id="input-button">
+      <form id="addform" method="post" action="add">
+         <input name="artistname" type="text" id="input-name"class="input-text" maxlength="40" placeholder="Artist Name">
+         <input name="artistinfo" type="text" id="input-info" class="input-text" maxlength="40" placeholder="About artist">
+         <input name="artistpic" type="text" id="input-picture" class="input-text" placeholder="Image Url">
+         <input type="submit" value="Add" id="input-button">
       </form>
    </div>
    
