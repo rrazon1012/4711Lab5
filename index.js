@@ -37,7 +37,11 @@ app.post("/delete",function(req,res){
    var database = fs.readFileSync('database.json');
    database = JSON.parse(database)
    var artists = database.Artists;
-   database.Artists = artists.filter((user)=>{return (user.name != req.body.name & user.info != req.body.info)});
+   database.Artists = artists.filter((user)=>{
+      //console.log("Name",user.name, req.body.name)
+      //console.log("Info",user.info, req.body.info)
+      //console.log("matches",(user.info != req.body.info && user.info != req.body.info))
+      return (user.name != req.body.name || user.info != req.body.info)});
    fs.writeFileSync('database.json',JSON.stringify(database));
 })
 
