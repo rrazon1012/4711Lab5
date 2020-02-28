@@ -86,7 +86,6 @@ function search(){
    var container = document.getElementById("input-destination");
    container.innerHTML = "";
    
-   
       var patt = new RegExp(input.toLowerCase());
       fetch('database.json')  //defaults to GET request 
          .then(function(response) {
@@ -134,7 +133,7 @@ function search(){
                del.textContent = "Delete"
                del.onclick = function(){
                   this.parentNode.remove();
-                  data.Artists.filter((user) =>{return artist.name == data.Artists.name})
+                  deleteArtist(data.Artists[x]);                  
                }
                container.appendChild(artist);
             }
@@ -156,6 +155,7 @@ function load(){
       .then(function(data) {// we have the data in json or text 
       
          for(var x in data.Artists){      
+            let obj = data.Artists[x];
 //            console.log("Item",data.Artists);
             console.log(data.Artists[x]);
             var artist = document.createElement("DIV");
@@ -193,10 +193,33 @@ function load(){
             del.textContent = "Delete"
             del.onclick = function(){
                this.parentNode.remove();
-               data.Artists.filter((user) =>{return artist.name == data.Artists.name})
+               deleteArtist(obj);
             }
             container.appendChild(artist);
          }
    }) 
       .catch(function(error) { console.log('Request failed', error) });
 }
+
+function deleteArtist(obj){
+   
+   fetch('/delete',{
+      method:'POST',
+      headers:{
+         'Content-Type':"application/json"
+      },
+      body: JSON.stringify(obj)
+   })
+      .then(function(response) {
+         return response.json(); 
+      }) 
+      .then(function(database) {// we have the data in json or text
+         console.log(database)
+//         artists = database.Artists;
+//         console.log("deleted", obj)
+//         var artists = database.Artists;
+//         database.Artists = artists.filter((user)=>{return (user.name != obj.name & user.info != obj.info)});
+      })
+      //.catch(function(error) { console.log('Request failed', error) });
+}
+

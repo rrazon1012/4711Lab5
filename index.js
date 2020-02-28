@@ -4,7 +4,7 @@ let bodyParser = require('body-parser');
 let path = require('path');
 let fs = require('fs');
 
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.urlencoded({extended:false}));
 
 app.use(express.static(path.join(__dirname,'/')))
 app.use(express.static(path.join(__dirname,'/index_files')))
@@ -17,6 +17,7 @@ app.get('/all', (req, res) => {
 app.listen(process.env.PORT ||3000);
 
 app.use(bodyParser.json());
+
 app.post("/add",function(req,res){
    
    console.log("logged");
@@ -33,13 +34,15 @@ app.post("/add",function(req,res){
    res.redirect("/")
 });
 
-//app.post("/search",function(req,res){
-//   var array = 'database.json'
-//   var data = JSON.parse
-//   res.redirect("/")
-//})
-
 app.post("/delete",function(req,res){
-   res.redirect("/")
+   console.log("deleting")
+   console.log(req.body.name)
+   console.log(req.body.info)
+   var database = fs.readFileSync('database.json');
+   database = JSON.parse(database)
+   var artists = database.Artists;
+   database.Artists = artists.filter((user)=>{return (user.name != req.body.name & user.info != req.body.info)});
+   console.log("new",database.Artists)
+   fs.writeFileSync('database.json',JSON.stringify(database));
 })
 
