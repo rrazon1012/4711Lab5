@@ -38,7 +38,6 @@ function add(){
    //var deldiv = document.createElement("DIV");
 
    var artistname = document.createElement("P")
-   console.log(name.value);
    artistname.className = "name";
    artistname.textContent = name.value;
    //name.value = "";
@@ -94,10 +93,8 @@ function search(){
          .then(function(data) {// we have the data in json or text 
 
             for(var x in data.Artists){     
-               console.log(patt.test(data.Artists[x].name.toLowerCase()))
                if(patt.test(data.Artists[x].name.toLowerCase())){
-   //            console.log("Item",data.Artists);
-               console.log(data.Artists[x]);
+
                var artist = document.createElement("DIV");
                artist.className = "artist";
 
@@ -156,8 +153,7 @@ function load(){
       
          for(var x in data.Artists){      
             let obj = data.Artists[x];
-//            console.log("Item",data.Artists);
-            console.log(data.Artists[x]);
+//          
             var artist = document.createElement("DIV");
             artist.className = "artist";
             
@@ -214,11 +210,6 @@ function deleteArtist(obj){
          return response.json(); 
       }) 
       .then(function(database) {// we have the data in json or text
-         console.log(database)
-//         artists = database.Artists;
-//         console.log("deleted", obj)
-//         var artists = database.Artists;
-//         database.Artists = artists.filter((user)=>{return (user.name != obj.name & user.info != obj.info)});
       })
       //.catch(function(error) { console.log('Request failed', error) });
 }

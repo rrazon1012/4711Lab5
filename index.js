@@ -28,21 +28,16 @@ app.post("/add",function(req,res){
    var database = fs.readFileSync('database.json');
    database = JSON.parse(database);
    var artists = database.Artists;
-   console.log(artists);
    artists.push(object);
    fs.writeFileSync('database.json',JSON.stringify(database))
    res.redirect("/")
 });
 
 app.post("/delete",function(req,res){
-   console.log("deleting")
-   console.log(req.body.name)
-   console.log(req.body.info)
    var database = fs.readFileSync('database.json');
    database = JSON.parse(database)
    var artists = database.Artists;
    database.Artists = artists.filter((user)=>{return (user.name != req.body.name & user.info != req.body.info)});
-   console.log("new",database.Artists)
    fs.writeFileSync('database.json',JSON.stringify(database));
 })
 
