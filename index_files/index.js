@@ -94,7 +94,7 @@ function search(){
 
             for(var x in data.Artists){     
                if(patt.test(data.Artists[x].name.toLowerCase())){
-
+               let obj = data.Artists[x];
                var artist = document.createElement("DIV");
                artist.className = "artist";
 
@@ -130,7 +130,7 @@ function search(){
                del.textContent = "Delete"
                del.onclick = function(){
                   this.parentNode.remove();
-                  deleteArtist(data.Artists[x]);                  
+                  deleteArtist(obj);                  
                }
                container.appendChild(artist);
             }
